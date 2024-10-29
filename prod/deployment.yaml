@@ -19,7 +19,7 @@ spec:
       - name: aws-ecr-secret
       containers:
       - name: nodejs-container
-        image: 325636060535.dkr.ecr.ca-central-1.amazonaws.com/devops_1:v30  # Replace with your Node.js app image
+        image: 325636060535.dkr.ecr.ca-central-1.amazonaws.com/devops_1:v2  # Replace with your Node.js app image
         ports:
         - containerPort: 4000  # Change this if your app listens on a different port
         env:

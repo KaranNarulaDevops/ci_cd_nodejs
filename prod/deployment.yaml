@@ -1,1 +1,62 @@
-
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-app
+  namespace: nodejsproject
+  labels:
+    app: nodejs-app
+spec:
+  replicas: 3  # Number of pod replicas
+  selector:
+    matchLabels:
+      app: nodejs-app
+  template:
+    metadata:
+      labels:
+        app: nodejs-app
+    spec:
+      imagePullSecrets:
+      - name: aws-ecr-secret
+      containers:
+      - name: nodejs-container
+        image: 325636060535.dkr.ecr.ca-central-1.amazonaws.com/devops_1:latest  # Replace with your Node.js app image
+        ports:
+        - containerPort: 4000  # Change this if your app listens on a different port
+        env:
+        - name: NODE_ENV
+          value: "production"
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 4000
+          initialDelaySeconds: 10
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 4000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: nodejs-service
+#   namespace: your-namespace  # Replace with your actual namespace
+#   labels:
+#     app: nodejs-app
+# spec:
+#   selector:
+#     app: nodejs-app
+#   type: LoadBalancer  # Use ClusterIP for internal access, NodePort for fixed ports, LoadBalancer for external access
+#   ports:
+#   - port: 80            # External port
+#     targetPort: 3000    # Port on the container where the app listens
+#     protocol: TCP

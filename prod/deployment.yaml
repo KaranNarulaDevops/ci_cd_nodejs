@@ -6,7 +6,7 @@ metadata:
   labels:
     app: nodejs-app
 spec:
-  replicas: 3  # Number of pod replicas
+  replicas: 4  # Number of pod replicas
   selector:
     matchLabels:
       app: nodejs-app

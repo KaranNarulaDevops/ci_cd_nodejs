@@ -22,28 +22,6 @@ spec:
         image: 325636060535.dkr.ecr.ca-central-1.amazonaws.com/devops_1:v3  # Replace with your Node.js app image
         ports:
         - containerPort: 4000  # Change this if your app listens on a different port
-        env:
-        - name: NODE_ENV
-          value: "production"
-        resources:
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
-        livenessProbe:
-          httpGet:
-            path: /health
-            port: 4000
-          initialDelaySeconds: 10
-          periodSeconds: 30
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 4000
-          initialDelaySeconds: 5
-          periodSeconds: 10
           
 # ---
 # apiVersion: v1
